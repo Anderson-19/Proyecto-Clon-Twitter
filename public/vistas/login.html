@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="../styles/style.css">
+    <title>Login</title>
+</head>
+    <body>
+          <br></br>
+          <form id="login-form" >
+              <h3>Iniciar Sesion</h3>
+              <label class="form-label" for="name">Username:</label>                 
+              <input class="form-input" id="name" oninput="validarUsuario()" type="text" placeholder="Username" name="name">
+              
+              <label class="form-label" for="pass">Password:</label>
+              <input class="form-input" id="pass" oninput="chequearPassword()" type="password" placeholder="password" name="pass">
+              
+			  <button class="button" id="login-button" type="submit" >Iniciar Sesion</button>
+			  <p id="Mensaje1"></p>
+			  <p id="Mensaje2"></p>
+          </form>  
+          <div class="mt-3" id="respuesta">    
+    </body>
+   
+   <script>	
+		var formulario = document.getElementById("login-form");
+		var MyButton = document.getElementById("login-button");
+        var respuesta = document.getElementById('respuesta');
+	    formulario.addEventListener('submit', function(e){	    	
+				e.preventDefault();
+                var xdatos = new FormData(formulario);
+                var name = document.getElementById("name").value;     					
+
+				if ((xdatos.get("name") == "") || (xdatos.get("pass") == "")){
+					alert("Campos vacios Llenar el registro como es debido...");
+					return;
+				}	
+				
+				var init = {
+					method: "POST",
+					body: xdatos
+				};					 
+						 
+				fetch('http://localhost:5000/LoginSingUp/Login', init)
+				.then( res => res.json())
+				.then( data => {
+					if(data.message == 'ok'){	
+						alert('Inicio De Session Correctamente');						
+                        setTimeout(()=>{openSesion(name)},100)
+					}else{
+                        alert('Login Invalido');                       
+						location.href = 'http://localhost:5000/vistas/login.html'; 
+					}
+				})
+				.catch(error => console.error('AAAAA  Error:', error));
+         });  
+         
+         validarUsuario = () =>{
+        let username = document.querySelector("#name").value;
+        let messageContainer = document.querySelector("#Mensaje1");
+        if (username.length > 32){
+            messageContainer.style.color = "";
+            messageContainer.innerHTML = "Username too long.";
+        }
+        else if (username.length === 0){
+            messageContainer.innerHTML = "";
+        }
+        else{
+            messageContainer.innerHTML = "";
+        }
+    }
+
+		 chequearPassword = () =>{
+        let pass1 = document.querySelector("#pass");
+        let messageContainer = document.querySelector("#Mensaje2");
+        if (pass1.value !== pass1.value){
+            messageContainer.style.color = "red";
+            messageContainer.innerHTML = "Passwords do not match.";
+        }
+        else{
+            if (pass1.value.length < 6 || pass1.value.length > 32){
+                messageContainer.style.color = "red";
+                messageContainer.innerHTML = "Password length must be between 6 to 32 characters.";
+            }
+            else {
+                messageContainer.innerHTML = "";
+            }
+        }
+    }
+
+    openSesion = (name) =>{
+	  	  window.open("http://localhost:5000/vistas/sesion.html?name=" + name, "_self");	
+	}
+</script>
+</html>

@@ -1,0 +1,130 @@
+*{
+    box-sizing: border-box;
+    margin: 2px;
+    padding: 0;
+}
+
+body{
+    background: #e6e6e6;
+}
+
+#parrafo{
+    font-family: 'Oswald', sans-serif;
+}
+
+header, .main, footer{
+    width: 90%;
+    max-width: 1513px;
+    margin: 20px auto;
+    font-family: 'Oswald', sans-serif;
+    float: center;
+}
+
+header nav{
+    background: #623f3f;
+    overflow: hidden;
+    width: 1270px;
+}
+
+header nav ul{
+    list-style: none;
+}
+
+header nav ul li{
+    float: left;
+}
+
+header nav ul li a{
+    padding: 10px 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    position: relative;
+    left: 1040px;
+}
+
+header nav ul li a:hover{
+    background: #A07D7D;
+}
+
+.main .articles{
+    width: 100%;
+    margin-right: 1.5%;
+    float: left;
+    height: 650px;
+}
+
+.main .articles article{
+    padding: 20px;
+    background: #fff;
+    margin-bottom: 20px;
+    font-family: 'Oswald', sans-serif;
+    width: 280px;
+    height: 304px;   
+}
+
+.contenido{
+    padding: 20px;
+    background: #fff;
+    margin-bottom: 20px;
+    font-family: 'Oswald', sans-serif;
+    width: 636px;
+    height: 643px;
+    position: relative;
+    left: 300px;
+    top: -662px;
+}
+
+.lateral-derecho{
+    padding: 20px;
+    background: #fff;
+    margin-bottom: 20px;
+    font-family: 'Oswald', sans-serif;
+    width: 310px;
+    height: 642px;
+    position: relative;
+    left: 957px;
+    top: -1325px;
+}
+
+aside{
+    width: 30%;
+    background: #A07D7D;
+    float: left;
+    padding: 40px;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+}
+aside .boton{
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #A07D7D;
+}
+
+aside .boton:focus{
+    border: 1.8px solid #A07D7D;
+}
+
+aside .boton{
+    margin-bottom: 0px;
+    background: #A07D7D;
+    color: #fff;
+    border: none;
+}
+
+aside .boton:hover{
+    background: #A07D7D;
+    cursor: pointer;
+}
+
+footer{
+    background: #623f3f;
+    color: #fff;
+    clear: both;
+    padding: 10px 0px;
+    text-align: center;
+}

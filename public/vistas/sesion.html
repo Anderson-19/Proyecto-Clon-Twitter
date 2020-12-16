@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+     <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../styles/sessionstyles.css">
+    <title>Sesion</title>
+</head>
+    <body onload="init()">
+    	<br>
+		 <p id="parrafo" style="position: relative; left: 1100px; font-family: 'Oswald', sans-serif; font-size: 15px;"> Sesion Abierta Por: <input type="text" id="name" name="something" disabled ></p>
+		 <br>
+		 <hr>  
+    	<input type="hidden"  id="sesion" name="sesion"  value="" >
+    	
+        <header>
+            <nav>
+                <ul>
+                    <li><a  onClick = "openPerfil()">Perfil</a></li>
+                    <li><a href="#" onClick ="cerrarSesion()" >Feed</a></li>                 
+                </ul>              
+            </nav>
+        </header>
+        <section class="main">
+            <section class="articles">
+                <article  width="300">
+                	<form id="form-archivo" enctype="multipart/form-data" >	                                         				   				
+    				</form>
+    				<div id="resultado"></div>	 
+                </article>
+                <article   width="500" class="visualizacion" >
+                </article> 
+                <div class="contenido">
+                </div>  
+                <div class="lateral-derecho">
+                </div>           
+            </section> 
+            </div>
+        </section>
+               
+        <footer>
+            <p>Sesion De Usuario</p>
+        </footer>
+</body>
+<script>
+     var formulario = document.getElementById("form-archivo");		
+		 var subirArchivo= event => {
+			  const archivos = event.target.files;
+			  var name = document.getElementById("name").value;
+			  var datos = new FormData(formulario);
+
+			 datos.append('archivo', archivos[0]);
+			 datos.append('name',name);
+
+			  var init = {
+					method: "POST",
+					body: datos 
+				};
+		
+			  fetch('https://murmuring-wildwood-16373.herokuapp.com/Archivos', init)
+			  .then(response => response.json())
+			  .then(data => {
+				  if(data.status == 200){
+					  obtenerData(name);				  
+				  }else{
+					  alert("Error Al Subir El Archivo");
+				  }			
+			  })
+			  .catch(error => console.error('AAAAA  Error:', error));
+			}
+		
+			document.querySelector('#subir_archivo').addEventListener('change', event => {
+			    subirArchivo(event);
+			});
+			
+			function init(){
+				  let url = location.search;
+				  var xvalues = url.split("=");
+				  sesionActual = xvalues[1];
+				  document.getElementById("name").value=sesionActual;
+				  document.getElementById("sesion").value=sesionActual;
+				  obtenerData(document.getElementById("name").value);					
+			}	
+</script>
+	
+</html>
