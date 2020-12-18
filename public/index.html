@@ -13,9 +13,19 @@
     <br>
     <div class="division">
         <h3>INICIO DE PAGINA</h3>
-        <button ><a href="./vistas/login.html">LOGEAR<i class="fas fa-angle-double-right"></i></a></button>
+        <button onclick="login()">LOGEAR</button>
+        <br></br>
         <br>
-        <button ><a href="./vistas/registro.html">REGISTRAR<i class="fas fa-angle-double-right"></i></a></button>
+        <button onclick="registro()" >REGISTRAR</button>
     </div>
 </body>
+<script>
+    login = () =>{
+        location.href = 'https://proyecto-clon-twitter.herokuapp.com/vistas/login.html'
+    }
+
+    registro = () =>{
+        location.href = 'https://proyecto-clon-twitter.herokuapp.com/vistas/registro.html'
+    }
+</script>
 </html>
