@@ -11,5 +11,8 @@ const pool1 = new Pool({
 module.exports = {
     query: (text, params, callback) => {
         return pool1.query(text, params, callback)
+    },
+    queryAsync: (text, params) => {
+        return pool1.query(text, params);
     }
 }
