@@ -1,24 +1,24 @@
-const db = require("../db/postgres");
-const encryptor = require("../encrypt/SHA-256");
+const dataBase = require("../model/postgres");
 const emailValidator = require("email-validator");
 const multiparty = require("multiparty");
+const crypto = require("crypto");
 
-const registerUser = (Username, Email, Password, res) => {
-    let queryString = "INSERT INTO users(username, email, password, private) VALUES($1, $2, $3, 'true')";
-    let params = [Username, Email, encryptor.encrypt(Password)];
-    db.query(queryString, params, (err) => {
+const registrarUsuario = (Username, Email, Password, res) => {
+    let queryString = "INSERT INTO users(username, email, password, privado) VALUES($1, $2, $3, 'true')";
+    let hash = crypto.createHash('sha256').update(Password).digest("hex");
+    let params = [Username, Email, hash];
+    dataBase.query(queryString, params, (err) => {
         if (err){
             console.log(err.stack);
             res.status(500).send(err);
         }
         else{
-            console.log("User: " + Username + ". Registered at " + Date());
             res.status(200).send({'message':'ok'});
         }
     })
 }
 
-const checkDuplicate = (req, res) => {
+const confirmarRegistro = (req, res) => {
     let form = new multiparty.Form();
     form.parse(req, (err, fields, files) => {
         let {name, email, pass} = fields;
@@ -34,42 +34,42 @@ const checkDuplicate = (req, res) => {
         let queryString = "SELECT username FROM users WHERE username = $1";
         let param = [name];
         if (name.length < 1) {
-            res.status(403).send("Username required. Registration failed.");
+            res.status(403).send({'massage':'Registro invalido'});
         } 
         else if (name.length > 25) {
-            res.status(403).send("Username too long. Registration failed.");
+            res.status(403).send({'massage':'Registro invalido'});
         } 
         else {
-            if (validatePassword(pass)) {
-                db.query(queryString, param, (error, success) => {
+            if (validarPassword(pass)) {
+                dataBase.query(queryString, param, (error, success) => {
                     if (error) {
                         res.status(500).send(err);
                     } 
                     else {
                         if (success.rows.length === 0) {
                             if (emailValidator.validate(email)){
-                                registerUser(name, email, pass, res);
+                                registrarUsuario(name, email, pass, res);
                             }
                             else{
-                                res.status(403).send("E-Mail direction is invalid.");
+                                res.status(403).send("La dirección de correo electrónico es inválida.");
                             }
                         } 
-                        else res.status(403).send("Username already exists.");
+                        else res.status(403).send("nombre de usuario ya existe.");
                     }
                 })
             } 
             else {
-                res.status(403).send("Password length must be between 6 to 32 characters. Registration failed");
+                res.status(403).send("La longitud de la contraseña debe tener entre 6 y 32 caracteres. Registro fallido");
             }
         }
     })
 }
 
-const validatePassword = (passwordToValidate) => {
-    return !(passwordToValidate.length < 6 || passwordToValidate.length > 32);
+const validarPassword = (password) => {
+    return !(password.length < 6 || password.length > 32);
 }
 
 module.exports = {
-    registerUser, 
-    checkDuplicate
+    registrarUsuario, 
+    confirmarRegistro
 }

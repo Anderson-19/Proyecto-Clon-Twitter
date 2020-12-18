@@ -11,10 +11,12 @@ body{
 
 .img-user{
     text-align: center;
-    width: 100%;
+    width: 88.2%;
     height: 354px;
-	padding: 25px;;
+    padding: 25px;
     background-image: url("../vistas/imagenes/9934-azul-liso.jpg");
+    position: relative;
+    left: 72px;
 }
 
 .avatar{
@@ -40,8 +42,11 @@ body{
     display: flex;
     justify-content: space-around;
     background-color: #bebebe;
+    width: 88.2%;
     height: 115px;
     padding: 20px 0;
+    position: relative;
+    left: 72px;
 }
 
 .main-info .usuario{

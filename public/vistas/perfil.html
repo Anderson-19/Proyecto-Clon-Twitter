@@ -1,42 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/stylePerfil.css">
-    <link rel="stylesheet" href="../styles/infoPerfil.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+     <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="../styles/sessionstyles.css">
+	<link rel="stylesheet" href="../styles/stylePerfil.css">
     <title>Perfil</title>
 </head>
-<body onload="init()" id="body">
+    <body onload="init()">
     	<br>
 		 <p id="parrafo" style="position: relative; left: 1100px; font-family: 'Oswald', sans-serif; font-size: 15px;"> Perfil De: <input type="text" id="name" name="something" disabled ></p>
 		 <br>
 		 <hr>  
     	<input type="hidden"  id="perfil" name="perfil"  value="" >
     	
-    <div class="img-user" >
-        <div id="imguser"><img src="ImgUser/usuario.jpg" class="avatar"></img></div>     
-        <div id="imagen"></div> 
-        <label for="file-upload" class="subir">
-            <i class="fas fa-cloud-upload-alt"></i>Modificar Foto
-        </label>
-        <input type="file" id="file-upload" accept="image/*" name="imagenes" style='display: none;'/>       
+        <header>
+            <nav>
+                <ul>
+                    <li><a  onClick = "openPerfil()">Perfil</a></li>
+                    <li><a href="#" onClick ="cerrarSesion()" >Feed</a></li>                 
+                </ul>              
+            </nav>
+        </header>
+    
+        <div class="img-user" >
+			<div id="imguser"><img src="ImgUser/usuario.jpg" class="avatar"></img></div>     
+			<div id="imagen"></div> 
+			<label for="file-upload" class="subir">
+				<i class="fas fa-cloud-upload-alt"></i>Modificar Foto
+			</label>
+			<input type="file" id="file-upload" accept="image/*" name="imagenes" style='display: none;'/>                  
+		</div>
+	
+		<div class="info">
+			<nav class="main-info">
+			<div id="info"></div>
+			<div id="imguser"><img src="ImgUser/usuario.jpg" style="width: 75px; height: 75px; border-radius: 50%; position: relative; left: -600px;"></img></div>
+			<div id="infoActual"></div>     
+			</nav>
+		</div>
+    			           
                
-    </div>
-    <div class="info">
-        <nav class="main-info">
-        <div id="info"></div>
-        <div id="imguser"><img src="ImgUser/usuario.jpg" style="width: 75px; height: 75px; border-radius: 50%; position: relative; left: -600px;"></img></div>
-        <div id="infoActual"></div>     
-        </nav>
-    </div>
-    <!--  <button id="btn-abrir-popup" class="btn-abrir-popup">Modificar Informacion</button>  --> 
-    <button id="cerrar-perfil" class="cerrar-perfil" onclick="cerrarPerfil()">Volver A Sesion</button> 
-    <button id="borrar-perfil" class="borrar-perfil" onclick="borrarPerfil()">Eliminar Perfil</button> 
+        <footer>
+            <p>Perfil De Usuario</p>
+        </footer>
 </body>
 <script>
-		
-		function init(){
+	 init = () => {
 			  let url = location.search;
 			  var xvalues = url.split("=");
 			  sesionActual = xvalues[1];
@@ -61,55 +72,12 @@
 			  parrafo2.style ="position: relative; left: 6px; top: -15px;";
 			  info.appendChild(parrafo2);			  			  
 		}
-		
-		var subirArchivo= event => {
-			  const archivos = event.target.files;
-			  var datos = new FormData();
 
-			 datos.append('imagenes', archivos[0]);
-		
+			openPerfil = () => {
+				let name = document.getElementById("name").value;
+				window.open("http://localhost:5000/vistas/sesion.html?name=" + name, "_self");	
+			}
 
-			  var init = {
-					method: "POST",
-					body: datos 
-				};
-		
-			  fetch('http://localhost:5000/fileManager/subirArchivos', init)
-			  .then(response => response.json())
-			  .then(data => {
-				  if(data.message == "archivo subido"){
-					  alert(data.archivo)
-					  //img();				  
-				  }else{
-					  alert("Error Al Subir La Foto");
-				  }			
-			  })
-			  .catch(error => console.error('AAAAA  Error:', error));
-			}
-		
-			document.querySelector('#file-upload').addEventListener('change', event => {
-			    subirArchivo(event);
-			});
-			
-			img = (imagen) =>{
-				var imguser = document.getElementById("imguser"); imguser.remove();
-				var img = document.getElementById("imagen");
-				var imgVer = new Image(); 
-				imgVer.src = "ImgUser/"+imagen; 
-		        imgVer.style = "width: 200px; height: 250px; border-radius: 50%; position: relative; left: 20px;";
-
-		        img.appendChild(imgVer);
-			}
-			
-			 cerrarPerfil = () =>{
-				window.location.href="session.html?name="+document.getElementById("name").value;
-			}
-			
-			borrarPerfil = () =>{
-				var info = document.getElementById("body"); 
-				window.location.href="session.html?name="+document.getElementById("name").value; info.remove();
-			}	
-		
 </script>
-
+	
 </html>

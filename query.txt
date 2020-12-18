@@ -39,3 +39,11 @@ id_tweets integer,
 primary key(id_likes),
 foreign key(id_users)references users on delete no action on update cascade,
 foreign key(id_tweets)references tweets on delete no action on update cascade)
+
+/*const pool2 = new Pool({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'inventario',
+    password: '29758990',
+    port: 5432,
+});*/

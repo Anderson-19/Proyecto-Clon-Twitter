@@ -53,15 +53,15 @@
 					body: xdatos 
 				};					 
 						 
-				fetch('http://localhost:5000/loginSingUp/SingUp', init)
+				fetch('https://proyecto-clon-twitter.herokuapp.com/registrarse-login/registrarse', init)
 				.then( res => res.json())
 				.then( data => {
 					if(data.message == 'ok'){
 						alert("Registro Exitoso");
-						location.href = 'http://localhost:5000/vistas/login.html';
+						location.href = 'https://proyecto-clon-twitter.herokuapp.com/vistas/login.html';
 					}else{
 						alert("Registro Invalido");
-						location.href = 'http://localhost:5000/vistas/registro.html';
+						location.href = 'https://proyecto-clon-twitter.herokuapp.com/vistas/registro.html';
 					}
 				})
 				.catch(error => console.error('AAAAA  Error:', error));							
@@ -71,8 +71,8 @@
         let username = document.querySelector("#name").value;
         let messageContainer = document.querySelector("#Mensaje3");
         if (username.length > 32){
-            messageContainer.style.color = "";
-            messageContainer.innerHTML = "Username too long.";
+            messageContainer.style.color = "red";
+            messageContainer.innerHTML = "Nombre de usuario demasiado largo.";
         }
         else if (username.length === 0){
             messageContainer.innerHTML = "";
@@ -95,7 +95,7 @@
             }
             else {
                 messageContainer.style.color = "red";
-                messageContainer.innerHTML = "E-Mail address is not valid.";
+                messageContainer.innerHTML = "La dirección de correo electrónico es inválida.";
             }
         }
     }
@@ -106,12 +106,12 @@
         let messageContainer = document.querySelector("#Mensaje1");
         if (pass1.value !== pass2.value){
             messageContainer.style.color = "red";
-            messageContainer.innerHTML = "Passwords do not match.";
+            messageContainer.innerHTML = "Las contraseñas no coinciden.";
         }
         else{
             if (pass1.value.length < 6 || pass1.value.length > 32){
                 messageContainer.style.color = "red";
-                messageContainer.innerHTML = "Password length must be between 6 to 32 characters.";
+                messageContainer.innerHTML = "La longitud de la contraseña debe tener entre 6 y 32 caracteres.";
             }
             else {
                 messageContainer.innerHTML = "";

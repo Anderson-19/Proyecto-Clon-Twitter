@@ -1,8 +1,8 @@
-const db = require("../db/postgres");
-const encryptor = require("../encrypt/SHA-256");
+const dataBase = require("../model/postgres");
 const multiparty = require("multiparty");
+const crypto = require("crypto");
 
-const verify = (req, res) => {
+const verificarLogin = (req, res) => {
     let form = new multiparty.Form();
     form.parse(req, (err, fields, files) =>{
         let {name, pass} = fields;
@@ -12,17 +12,17 @@ const verify = (req, res) => {
         name = name.split('"')[0];
         pass = pass.split('"')[1];
         pass = pass.split('"')[0];
-        let encryptedPass = encryptor.encrypt(pass);
+        let hash = crypto.createHash('sha256').update(pass).digest("hex");
         let query = "SELECT password FROM users WHERE username = $1";
         let params = [name];
-        db.query(query, params, (err, success) => {
+        dataBase.query(query, params, (err, success) => {
             if (err){
                 res.status(500).send(err);
             }
             else{
                 if (success.rows.length < 1) res.status(403).send("User not found.");
                 else{
-                    if (success.rows[0].password !== encryptedPass){
+                    if (success.rows[0].password !== hash){
                         res.status(403).send("Incorrect password.");
                     }
                     else{
@@ -36,13 +36,13 @@ const verify = (req, res) => {
     })
 }
 
-const LoggedIn = (req, res) => {
+const Conectado = (req, res) => {
     let session = req.session;
     if (session.name) res.status(200).send("True");
     else res.status(200).send("False");
 }
 
-const LogOut = (req, res) => {
+const cerrarSession = (req, res) => {
     req.session.destroy(err => {
         if (err) res.status(500).send(err);
         res.status(200).send("Logged out");
@@ -50,5 +50,5 @@ const LogOut = (req, res) => {
 }
 
 module.exports = {
-    verify, LoggedIn, LogOut
+    verificarLogin, Conectado, cerrarSession
 }

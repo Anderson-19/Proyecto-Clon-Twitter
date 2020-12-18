@@ -1,11 +1,7 @@
 const express =  require('express');
-const registrationRoute = require("./route/registration");
-const fileManager = require("./route/files");
-const profileManager = require("./route/profileData");
-const posts = require("./route/posts");
-const dataEdit = require("./route/edit");
-const path = require("path");
+const rutaRegistro = require("./route/registro");
 const session = require("express-session");
+const fileUpload = require('express-fileupload');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -15,9 +11,6 @@ app.use(express.text());
 app.use(express.json());
 app.use(session({secret:'justdanceSecret', saveUninitialized:true, resave:true}));
 
-//app.use(express.static(path.join(__dirname, 'build')));
-
-
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "http://localhost:5000");
     res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
@@ -26,14 +19,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use("/loginSingUp", registrationRoute);
-app.use("/fileManager", fileManager);
-app.use("/profileData", profileManager);
-app.use("/makeApost", posts);
-app.use("/DataEdition", dataEdit);
-
-app.get('*', (req, res) => {
-   // res.sendFile(path.join(__dirname, 'build', 'index.html'));
-})
+app.use("/registrarse-login", rutaRegistro);
 
 app.listen(port);

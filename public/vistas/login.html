@@ -10,10 +10,10 @@
           <form id="login-form" >
               <h3>Iniciar Sesion</h3>
               <label class="form-label" for="name">Username:</label>                 
-              <input class="form-input" id="name" oninput="validarUsuario()" type="text" placeholder="Username" name="name">
+              <input class="form-input" id="name"  type="text" placeholder="Username" name="name">
               
               <label class="form-label" for="pass">Password:</label>
-              <input class="form-input" id="pass" oninput="chequearPassword()" type="password" placeholder="password" name="pass">
+              <input class="form-input" id="pass"  type="password" placeholder="password" name="pass">
               
 			  <button class="button" id="login-button" type="submit" >Iniciar Sesion</button>
 			  <p id="Mensaje1"></p>
@@ -41,55 +41,21 @@
 					body: xdatos
 				};					 
 						 
-				fetch('http://localhost:5000/LoginSingUp/Login', init)
+				fetch('https://proyecto-clon-twitter.herokuapp.com/registrarse-login/Login', init)
 				.then( res => res.json())
 				.then( data => {
-					if(data.message == 'ok'){	
-						alert('Inicio De Session Correctamente');						
+					if(data.message == 'ok'){							
                         setTimeout(()=>{openSesion(name)},100)
 					}else{
                         alert('Login Invalido');                       
-						location.href = 'http://localhost:5000/vistas/login.html'; 
+						location.href = 'https://proyecto-clon-twitter.herokuapp.com/vistas/login.html'; 
 					}
 				})
 				.catch(error => console.error('AAAAA  Error:', error));
          });  
-         
-         validarUsuario = () =>{
-        let username = document.querySelector("#name").value;
-        let messageContainer = document.querySelector("#Mensaje1");
-        if (username.length > 32){
-            messageContainer.style.color = "";
-            messageContainer.innerHTML = "Username too long.";
-        }
-        else if (username.length === 0){
-            messageContainer.innerHTML = "";
-        }
-        else{
-            messageContainer.innerHTML = "";
-        }
-    }
-
-		 chequearPassword = () =>{
-        let pass1 = document.querySelector("#pass");
-        let messageContainer = document.querySelector("#Mensaje2");
-        if (pass1.value !== pass1.value){
-            messageContainer.style.color = "red";
-            messageContainer.innerHTML = "Passwords do not match.";
-        }
-        else{
-            if (pass1.value.length < 6 || pass1.value.length > 32){
-                messageContainer.style.color = "red";
-                messageContainer.innerHTML = "Password length must be between 6 to 32 characters.";
-            }
-            else {
-                messageContainer.innerHTML = "";
-            }
-        }
-    }
 
     openSesion = (name) =>{
-	  	  window.open("http://localhost:5000/vistas/sesion.html?name=" + name, "_self");	
+	  	  window.open("https://proyecto-clon-twitter.herokuapp.com/vistas/perfil.html?name=" + name, "_self");	
 	}
 </script>
 </html>

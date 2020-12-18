@@ -1,4 +1,5 @@
 const { Pool } = require('pg');
+
 const pool1 = new Pool({
     user: 'tmxlxvhosmtvkq',
     host: 'ec2-18-211-48-247.compute-1.amazonaws.com',
@@ -7,19 +8,8 @@ const pool1 = new Pool({
     port: 5432,
 });
 
-/*const pool2 = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'inventario',
-    password: '29758990',
-    port: 5432,
-});*/
-
 module.exports = {
     query: (text, params, callback) => {
         return pool1.query(text, params, callback)
-    },
-    queryAsync: (text, params) => {
-        return pool1.query(text, params);
     }
 }
