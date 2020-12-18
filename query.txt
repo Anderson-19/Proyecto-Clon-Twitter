@@ -1,23 +1,23 @@
 CREATE TABLE users(
-id_users integer not null,
+id_users serial not null,
 username varchar(40),
 email varchar(100),
 password varchar(100),
-public varchar(20),
-hasavatar varchar(40),
-avatarpath varchar(40),
+privado varchar(20),
+avatar1 varchar(40),
+avatar2 varchar(40),
 primary key(id_users));
 
 CREATE TABLE follows(
-id_follows integer not null,
+id_follows serial not null,
 username varchar(40),
 followsuser varchar(50),
-id_users integer,
+id_users serial,
 primary key(id_follows),
 foreign key(id_users) references users on delete no action on update cascade);
 
 CREATE TABLE tweets(
-id_tweets integer not null,
+id_tweets serial not null,
 username varchar(40),
 text varchar(400),
 tweet_data varchar(400),
@@ -25,17 +25,17 @@ referencedTweet varchar(100),
 type varchar(40),
 tweetid varchar(40),
 filelocation varchar(100),
-id_users integer,
+id_users serial,
 primary key(id_tweets),
 foreign key(id_users)references users on delete no action on update cascade)
 
 CREATE TABLE likes(
-id_likes integer not null,
+id_likes serial not null,
 username varchar(40),
 referencedTweet varchar(100),
 type varchar(40),
-id_users integer,
-id_tweets integer,
+id_users serial,
+id_tweets serial,
 primary key(id_likes),
 foreign key(id_users)references users on delete no action on update cascade,
 foreign key(id_tweets)references tweets on delete no action on update cascade)
